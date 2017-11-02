@@ -21,7 +21,9 @@ defmodule ElixirGoogleDriveApi.Mixfile do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:goth, "~> 0.4.0"}
+      {:plug, "~> 1.0"},
+      {:goth, "~> 0.4.0"},
+      {:mock, "~> 0.2.0", only: :test}
     ]
   end
 end
