@@ -24,6 +24,7 @@ defmodule ElixirGoogleDriveApi.Mixfile do
       {:plug, "~> 1.0"},
       {:goth, "~> 0.4.0"},
       {:mock, "~> 0.2.0", only: :test},
+      {:credo, "~> 0.8.1", only: [:dev, :test]},
     ]
   end
 end

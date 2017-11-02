@@ -1,0 +1,18 @@
+---
+engines:
+  fixme:
+    enabled: true
+  credo:
+    enabled: true
+    channel: "beta"
+    checks:
+      module_doc:
+        enabled: false
+ratings:
+  paths:
+  - "**.ex"
+  - "**.exs"
+exclude_paths:
+- config/
+- _build/
+- deps/
