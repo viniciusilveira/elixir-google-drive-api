@@ -11,7 +11,7 @@ defmodule ElixirGoogleDriveApi.Drive do
     %{ title: title}
     |> Poison.encode!
   end
-  defp mount_body(_), do: nil
+  defp mount_body(_), do: %{} |> Poison.encode!
 
   def update_file(file_id, opts \\%{}) do
     body = mount_body(opts)
