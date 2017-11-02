@@ -29,4 +29,4 @@ use Mix.Config
 #
 #     import_config "#{Mix.env}.exs"
 config :goth,
-  json: "config/client_secret.json" |> File.read!
+  json: "./config/client_secret.json" |> File.read!
