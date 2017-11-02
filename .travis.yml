@@ -1,0 +1,8 @@
+language: elixir
+elixir:
+  - 1.5
+install:
+  - cp config/client_secret.json.example config/client_secret.json
+  - mix local.hex --force
+  - mix local.rebar --force
+  - mix deps.get
