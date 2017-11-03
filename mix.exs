@@ -39,7 +39,7 @@ defmodule ElixirGoogleDriveApi.Mixfile do
   defp package do
     [
       name: "elixir_google_drive_api",
-      files: ["lib", "mix.exs", "README*" ],
+      files: ["lib", "mix.exs", "README*"],
       maintainers: ["Marcos Vinicius O. Silveira"],
       licenses: ["Apache 2.0"],
       links: %{"Github" => "https://github.com/viniciusilveira/elixir-google-drive-api"}
