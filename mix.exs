@@ -10,7 +10,13 @@ defmodule ElixirGoogleDriveApi.Mixfile do
       package: package(),
       description: description(),
       deps: deps(),
-      source_url: "https://github.com/viniciusilveira/elixir-google-drive-api"
+      source_url: "https://github.com/viniciusilveira/elixir-google-drive-api",
+      preferred_cli_env: [
+        "coveralls": :test,
+        "coveralls.html": :test,
+        "coveralls.json": :test,
+      ],
+      test_coverage: [tool: ExCoveralls],
     ]
   end
 
@@ -29,6 +35,7 @@ defmodule ElixirGoogleDriveApi.Mixfile do
       {:mock, "~> 0.2.0", only: :test},
       {:credo, "~> 0.8.1", only: [:dev, :test]},
       {:ex_doc, ">= 0.0.0", only: :dev},
+      {:excoveralls, "~> 0.7.4"},
     ]
   end
 
