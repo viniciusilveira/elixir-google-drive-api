@@ -37,8 +37,13 @@ defmodule ElixirGoogleDriveApi.Drive do
   def export_file(file_id, headers, mime_type \\ "application/vnd.oasis.opendocument.text", download_dest \\ ".temp/doc_file.doc") do
     case HTTPoison.get export_url(file_id, mime_type), headers do
       {:ok, %HTTPoison.Response{body: response_body}} ->
-        File.write!(download_dest, response_body)
-        download_dest
+        if(!String.valid?(response_body)) do
+          File.write!(download_dest, response_body)
+          {:ok, download_dest}
+        else
+          response_body
+          |> Poison.decode!
+        end
       {:error, %HTTPoison.Error{reason: reason}} -> reason
     end
   end
