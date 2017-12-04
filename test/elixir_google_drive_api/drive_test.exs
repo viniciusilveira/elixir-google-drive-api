@@ -70,7 +70,7 @@ defmodule ElixirGoogleDriveApi.DriveTest do
     0, 39, 0, 0, 0, 8, 0, 0, 0, 109, 105, 109, 101, 116, 121, 112, 101, 97, 112,
     112, 108, 105, 99, 97, 116, 105, 111, 110, 47>>
 
-    @response_body {:ok, %HTTPoison.Response{ body: @body}}
+    @response_body {:ok, %HTTPoison.Response{body: @body}}
     @error_body "{\n \"error\": {\n  \"errors\": [\n   {\n    \"domain\": \"global\",\n    \"reason\": \"badRequest\",\n    \"message\": \"The requested conversion is not supported.\",\n    \"locationType\": \"parameter\",\n    \"location\": \"convertTo\"\n   }\n  ],\n  \"code\": 400,\n  \"message\": \"The requested conversion is not supported.\"\n }\n}\n"
     @error_response_body {:error, %HTTPoison.Error{reason: @error_body}}
 
