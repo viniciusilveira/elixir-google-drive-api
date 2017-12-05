@@ -58,4 +58,29 @@ defmodule ElixirGoogleDriveApi.DriveTest do
       end
     end
   end
+
+  describe "update_permission_file" do
+    @permission_id "anyoneWithLink"
+    @invalid_permission_id "anyone"
+    @update_permission_url "https://www.googleapis.com/drive/v2/files/#{@file_id}/permissions/#{@permission_id}"
+    @invalid_update_permission_url "https://www.googleapis.com/drive/v2/files/#{@file_id}/permissions/#{@invalid_permission_id}"
+    @body "{\n \"kind\": \"drive#permission\",\n \"etag\": \"\\\"rOX0fJzgyZU36BYOEcGKIYxPCtI/WYANCZ0UohBR0ORDBV2s-qumiio\\\"\",\n \"id\": \"anyoneWithLink\",\n \"selfLink\": \"https://www.googleapis.com/drive/v2/files/12BbXrA627UzddYJWK3qww1yvWl_aKuvEeSv-qkPtz68/permissions/anyoneWithLink\",\n \"role\": \"writer\",\n \"type\": \"anyone\",\n \"withLink\": true\n}\n"
+    @response_body {:ok, %HTTPoison.Response{body: @body}}
+    @error_body "{\n \"error\": {\n  \"errors\": [\n   {\n    \"domain\": \"global\",\n    \"reason\": \"notFound\",\n    \"message\": \"Permission not found: anyone.\",\n    \"locationType\": \"other\",\n    \"location\": \"permission\"\n   }\n  ],\n  \"code\": 404,\n  \"message\": \"Permission not found: anyone.\"\n }\n}\n"
+    @error_response_body {:error, %HTTPoison.Error{reason: @error_body}}
+
+    test "with success" do
+      with_mock HTTPoison, [put: fn(@update_permission_url, "", @headers) -> @response_body end] do
+        response = Drive.update_permission_file(@file_id, @headers, @permission_id)
+        assert response == @body |> Poison.decode!
+      end
+    end
+
+    test "with error" do
+      with_mock HTTPoison, [put: fn(@invalid_update_permission_url, "", @headers) -> @error_response_body end] do
+        response = Drive.update_permission_file(@file_id, @headers, @invalid_permission_id)
+        assert response == @error_body
+      end
+    end
+  end
 end
