@@ -15,7 +15,7 @@ Elixir library to work files of Google Drive
 3. Select your project name as service account and __JSON__ as key format, download the created key and rename it to __client_secret.json__.
 4. Press __Manage service accounts__ on a credential page, copy your __Service Account Identifier__: _[projectname]@[domain].iam.gserviceaccount.com_
 5. Create or open existing __document__ on your __Google Drive__ and add __Service Account Identifier__ as user invited in __Collaboration Settings__.
-6. Add `{:elixir_google_drive_api, "~> 0.1.0"}` to __mix.exs__ under `deps` function, add `:elixir_google_drive_api` in your application list.
+6. Add `{:elixir_google_drive_api, "~> 0.2.0"}` to __mix.exs__ under `deps` function, add `:elixir_google_drive_api` in your application list.
 7. Add __client_secret.json__ in your `config.exs` or other config file, like `dev.exs` or `prod.secret.exs`.
     config :goth,
         json: "./config/client_secret.json" |> File.read!
