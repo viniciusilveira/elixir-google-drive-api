@@ -35,7 +35,7 @@ defmodule ElixirGoogleDriveApi.Mixfile do
       {:mock, "~> 0.2.0", only: :test},
       {:credo, "~> 0.8.1", only: [:dev, :test]},
       {:ex_doc, ">= 0.0.0", only: :dev},
-      {:excoveralls, "~> 0.7.4"},
+      {:excoveralls, "~> 0.7", only: :test},
     ]
   end
 
