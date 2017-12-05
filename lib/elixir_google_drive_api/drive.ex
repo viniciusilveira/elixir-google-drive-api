@@ -8,6 +8,10 @@ defmodule ElixirGoogleDriveApi.Drive do
   defp export_url(file_id, mime_type), do:
     "https://www.googleapis.com/drive/v3/files/#{file_id}/export?mimeType=#{mime_type}"
 
+  defp update_permission_url(file_id, permission_id), do:
+   "https://www.googleapis.com/drive/v2/files/#{file_id}/permissions/#{permission_id}"
+
+
   defp mount_body(%{title: title}) do
     %{title: title}
     |> Poison.encode!
@@ -44,6 +48,15 @@ defmodule ElixirGoogleDriveApi.Drive do
           File.write!(download_dest, response_body)
           {:ok, download_dest}
         end
+      {:error, %HTTPoison.Error{reason: reason}} -> reason
+    end
+  end
+
+  def update_permission_file(file_id, headers, permission_id) do
+    case HTTPoison.put update_permission_url(file_id, permission_id), "", headers do
+      {:ok, %HTTPoison.Response{body: response_body}} ->
+        response_body
+        |> Poison.decode!
       {:error, %HTTPoison.Error{reason: reason}} -> reason
     end
   end
