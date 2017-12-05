@@ -3,7 +3,7 @@ defmodule ElixirGoogleDriveApi.Drive do
 
   defp update_url(file_id), do: "https://www.googleapis.com/drive/v2/files/#{file_id}"
 
-  def update_permission_url(file_id, permission_id), do: "https://www.googleapis.com/drive/v2/files/#{file_id}/permissions/#{permission_id}"
+  defp update_permission_url(file_id, permission_id), do: "https://www.googleapis.com/drive/v2/files/#{file_id}/permissions/#{permission_id}"
 
   defp mount_body(%{title: title}) do
     %{title: title}
