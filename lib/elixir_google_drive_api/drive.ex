@@ -11,6 +11,8 @@ defmodule ElixirGoogleDriveApi.Drive do
   defp update_permission_url(file_id, permission_id), do:
    "https://www.googleapis.com/drive/v2/files/#{file_id}/permissions/#{permission_id}"
 
+  defp insert_permission_url(file_id), do:
+   "https://www.googleapis.com/drive/v2/files/#{file_id}/permissions"
 
   defp mount_body(%{title: title}) do
     %{title: title}
@@ -59,5 +61,26 @@ defmodule ElixirGoogleDriveApi.Drive do
         |> Poison.decode!
       {:error, %HTTPoison.Error{reason: reason}} -> reason
     end
+  end
+
+  def insert_permission_file(file_id, headers, body \\ "") do
+    case HTTPoison.post insert_permission_url(file_id), body, headers do
+      {:ok, %HTTPoison.Response{body: response_body}} ->
+        response_body
+        |> Poison.decode!
+      {:error, %HTTPoison.Error{reason: reason}} -> reason
+    end
+  end
+
+  def share_file_with_link(file_id, headers) do
+    body =
+      %{
+        role: "writer",
+        type: "anyone",
+        withLink: true
+      }
+      |> Poison.encode
+
+    insert_permission_file(file_id, headers, body)
   end
 end

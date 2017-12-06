@@ -89,7 +89,6 @@ defmodule ElixirGoogleDriveApi.DriveTest do
     end
   end
 
-
   describe "update_permission_file" do
     @permission_id "anyoneWithLink"
     @invalid_permission_id "anyone"
@@ -110,6 +109,36 @@ defmodule ElixirGoogleDriveApi.DriveTest do
     test "with error" do
       with_mock HTTPoison, [put: fn(@invalid_update_permission_url, "", @headers) -> @error_response_body end] do
         response = Drive.update_permission_file(@file_id, @headers, @invalid_permission_id)
+        assert response == @error_body
+      end
+    end
+  end
+
+  describe "share_file_with_link" do
+    @invalid_file_id 'invalid'
+    @insert_permission_url "https://www.googleapis.com/drive/v2/files/#{@file_id}/permissions"
+    @invalid_insert_permission_url "https://www.googleapis.com/drive/v2/files/#{@invalid_file_id}/permissions"
+    @request_body %{
+        role: "writer",
+        type: "anyone",
+        withLink: true
+      }
+      |> Poison.encode
+    @body "{\"withLink\":true,\"type\":\"anyone\",\"selfLink\":\"https://www.googleapis.com/drive/v2/files/1OLrp44QxZkIQzp4pjxUlsgANqzGGcVGQ7UCKKYWHIWs/permissions/anyoneWithLink\",\"role\":\"writer\",\"kind\":\"drive#permission\",\"id\":\"anyoneWithLink\",\"etag\":\"\\\"rOX0fJzgyZU36BYOEcGKIYxPCtI/_m1PdHgICp2fFXSJzBuz5he_bzI\\\"\"}"
+    @response_body {:ok, %HTTPoison.Response{body: @body}}
+    @error_body "{\"error\":{\"errors\":[{\"domain\":\"global\",\"reason\":\"authError\",\"message\":\"Invalid Credentials\",\"locationType\":\"header\",\"location\":\"Authorization\"}],\"code\":401,\"message\":\"Invalid Credentials\"}}"
+    @error_response_body {:error, %HTTPoison.Error{reason: @error_body}}
+
+    test "with success" do
+      with_mock HTTPoison, [post: fn(@insert_permission_url, @request_body, @headers) -> @response_body end] do
+        response = Drive.share_file_with_link(@file_id, @headers)
+        assert response == @body |> Poison.decode!
+      end
+    end
+
+    test "with error" do
+      with_mock HTTPoison, [post: fn(@invalid_insert_permission_url, @request_body, @headers) -> @error_response_body end] do
+        response = Drive.share_file_with_link(@invalid_file_id, @headers)
         assert response == @error_body
       end
     end
