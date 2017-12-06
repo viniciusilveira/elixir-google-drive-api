@@ -1,18 +1,19 @@
 defmodule ElixirGoogleDriveApi.Drive do
   alias File
 
-  defp copy_url(file_id), do: "https://www.googleapis.com/drive/v3/files/#{file_id}/copy"
+  defp api_url(file_id), do:
+    "https://www.googleapis.com/drive/v3/files/#{file_id}"
 
-  defp update_url(file_id), do: "https://www.googleapis.com/drive/v2/files/#{file_id}"
+  defp copy_url(file_id), do: "#{api_url(file_id)}/copy"
 
-  defp export_url(file_id, mime_type), do:
-    "https://www.googleapis.com/drive/v3/files/#{file_id}/export?mimeType=#{mime_type}"
+  defp update_url(file_id), do: api_url(file_id)
+
+  defp export_url(file_id, mime_type), do: "#{api_url(file_id)}/export?mimeType=#{mime_type}"
 
   defp update_permission_url(file_id, permission_id), do:
-   "https://www.googleapis.com/drive/v2/files/#{file_id}/permissions/#{permission_id}"
+    "#{api_url(file_id)}/permissions/#{permission_id}"
 
-  defp insert_permission_url(file_id), do:
-   "https://www.googleapis.com/drive/v2/files/#{file_id}/permissions"
+  defp insert_permission_url(file_id), do: "#{api_url(file_id)}/permissions"
 
   defp mount_body(%{title: title}) do
     %{title: title}
@@ -76,10 +77,9 @@ defmodule ElixirGoogleDriveApi.Drive do
     body =
       %{
         role: "writer",
-        type: "anyone",
-        withLink: true
+        type: "anyone"
       }
-      |> Poison.encode
+      |> Poison.encode!
 
     insert_permission_file(file_id, headers, body)
   end
