@@ -15,13 +15,13 @@ defmodule ElixirGoogleDriveApi.Drive do
 
   defp insert_permission_url(file_id), do: "#{api_url(file_id)}/permissions"
 
-  defp mount_body(%{title: title}) do
-    %{title: title}
+  defp mount_body(%{title: name}) do
+    %{name: name}
     |> Poison.encode!
   end
   defp mount_body(_), do: %{} |> Poison.encode!
 
-  def rename_file(file_id, opts = %{title: _title}, headers) do
+  def rename_file(file_id, opts = %{title: _name}, headers) do
     body = mount_body(opts)
     request(:patch, update_url(file_id), headers, body)
   end
