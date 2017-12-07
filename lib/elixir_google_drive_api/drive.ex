@@ -23,22 +23,11 @@ defmodule ElixirGoogleDriveApi.Drive do
 
   def rename_file(file_id, opts = %{title: _title}, headers) do
     body = mount_body(opts)
-
-    case HTTPoison.patch update_url(file_id), body, headers do
-      {:ok, %HTTPoison.Response{body: response_body}} ->
-        response_body
-        |> Poison.decode!
-      {:error, %HTTPoison.Error{reason: reason}} -> reason
-    end
+    request(:patch, update_url(file_id), headers, body)
   end
 
   def copy_file(file_id, headers) do
-    case HTTPoison.post copy_url(file_id), "", headers do
-      {:ok, %HTTPoison.Response{body: response_body}} ->
-        response_body
-        |> Poison.decode!
-      {:error, %HTTPoison.Error{reason: reason}} -> reason
-    end
+    request(:post, copy_url(file_id), headers)
   end
 
   def export_file(file_id, headers, mime_type \\ "application/vnd.oasis.opendocument.text", download_dest \\ ".temp/doc_file.doc") do
@@ -56,21 +45,11 @@ defmodule ElixirGoogleDriveApi.Drive do
   end
 
   def update_permission_file(file_id, headers, permission_id) do
-    case HTTPoison.put update_permission_url(file_id, permission_id), "", headers do
-      {:ok, %HTTPoison.Response{body: response_body}} ->
-        response_body
-        |> Poison.decode!
-      {:error, %HTTPoison.Error{reason: reason}} -> reason
-    end
+    request(:put, update_permission_url(file_id, permission_id), headers)
   end
 
   def insert_permission_file(file_id, headers, body \\ "") do
-    case HTTPoison.post insert_permission_url(file_id), body, headers do
-      {:ok, %HTTPoison.Response{body: response_body}} ->
-        response_body
-        |> Poison.decode!
-      {:error, %HTTPoison.Error{reason: reason}} -> reason
-    end
+    request(:post, insert_permission_url(file_id), headers, body)
   end
 
   def share_file_with_link(file_id, headers) do
@@ -82,5 +61,14 @@ defmodule ElixirGoogleDriveApi.Drive do
       |> Poison.encode!
 
     insert_permission_file(file_id, headers, body)
+  end
+
+  defp request(method, url, headers, body \\ "") do
+    case HTTPoison.request(method, url, body, headers) do
+      {:ok, %HTTPoison.Response{body: response_body}} ->
+        response_body
+        |> Poison.decode!
+      {:error, %HTTPoison.Error{reason: reason}} -> reason
+    end
   end
 end
