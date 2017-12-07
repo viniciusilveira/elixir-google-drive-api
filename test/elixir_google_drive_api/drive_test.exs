@@ -42,7 +42,7 @@ defmodule ElixirGoogleDriveApi.DriveTest do
     @error_body "{\n \"error\": {\n  \"errors\": [\n   {\n    \"domain\": \"global\",\n    \"reason\": \"notFound\",\n    \"message\": \"File not found: 1pdACPWuN4BSKgD4Yjv3IpJEbubIiC0ON9rTZWIhDsPS\",\n    \"locationType\": \"other\",\n    \"location\": \"file\"\n   }\n  ],\n  \"code\": 404,\n  \"message\": \"File not found: 1pdACPWuN4BSKgD4Yjv3IpJEbubIiC0ON9rTZWIhDsPS\"\n }\n}\n"
     @error_response_body {:error, %HTTPoison.Error{reason: @error_body}}
 
-    @request_body %{title: "Renamed"} |> Poison.encode!
+    @request_body %{name: "Renamed"} |> Poison.encode!
 
     test "with success" do
       with_mock HTTPoison, [request: fn(:patch, @update_url, @request_body, @headers) -> @response_body end] do
