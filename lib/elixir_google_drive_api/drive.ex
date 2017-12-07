@@ -1,41 +1,33 @@
 defmodule ElixirGoogleDriveApi.Drive do
   alias File
 
-  defp copy_url(file_id), do: "https://www.googleapis.com/drive/v3/files/#{file_id}/copy"
+  defp api_url(file_id), do:
+    "https://www.googleapis.com/drive/v3/files/#{file_id}"
 
-  defp update_url(file_id), do: "https://www.googleapis.com/drive/v2/files/#{file_id}"
+  defp copy_url(file_id), do: "#{api_url(file_id)}/copy"
 
-  defp export_url(file_id, mime_type), do:
-    "https://www.googleapis.com/drive/v3/files/#{file_id}/export?mimeType=#{mime_type}"
+  defp update_url(file_id), do: api_url(file_id)
+
+  defp export_url(file_id, mime_type), do: "#{api_url(file_id)}/export?mimeType=#{mime_type}"
 
   defp update_permission_url(file_id, permission_id), do:
-   "https://www.googleapis.com/drive/v2/files/#{file_id}/permissions/#{permission_id}"
+    "#{api_url(file_id)}/permissions/#{permission_id}"
 
+  defp insert_permission_url(file_id), do: "#{api_url(file_id)}/permissions"
 
-  defp mount_body(%{title: title}) do
-    %{title: title}
+  defp mount_body(%{title: name}) do
+    %{name: name}
     |> Poison.encode!
   end
   defp mount_body(_), do: %{} |> Poison.encode!
 
-  def rename_file(file_id, opts = %{title: _title}, headers) do
+  def rename_file(file_id, opts = %{title: _name}, headers) do
     body = mount_body(opts)
-
-    case HTTPoison.patch update_url(file_id), body, headers do
-      {:ok, %HTTPoison.Response{body: response_body}} ->
-        response_body
-        |> Poison.decode!
-      {:error, %HTTPoison.Error{reason: reason}} -> reason
-    end
+    request(:patch, update_url(file_id), headers, body)
   end
 
   def copy_file(file_id, headers) do
-    case HTTPoison.post copy_url(file_id), "", headers do
-      {:ok, %HTTPoison.Response{body: response_body}} ->
-        response_body
-        |> Poison.decode!
-      {:error, %HTTPoison.Error{reason: reason}} -> reason
-    end
+    request(:post, copy_url(file_id), headers)
   end
 
   def export_file(file_id, headers, mime_type \\ "application/vnd.oasis.opendocument.text", download_dest \\ ".temp/doc_file.doc") do
@@ -53,7 +45,26 @@ defmodule ElixirGoogleDriveApi.Drive do
   end
 
   def update_permission_file(file_id, headers, permission_id) do
-    case HTTPoison.put update_permission_url(file_id, permission_id), "", headers do
+    request(:put, update_permission_url(file_id, permission_id), headers)
+  end
+
+  def insert_permission_file(file_id, headers, body \\ "") do
+    request(:post, insert_permission_url(file_id), headers, body)
+  end
+
+  def share_file_with_link(file_id, headers) do
+    body =
+      %{
+        role: "writer",
+        type: "anyone"
+      }
+      |> Poison.encode!
+
+    insert_permission_file(file_id, headers, body)
+  end
+
+  defp request(method, url, headers, body \\ "") do
+    case HTTPoison.request(method, url, body, headers) do
       {:ok, %HTTPoison.Response{body: response_body}} ->
         response_body
         |> Poison.decode!
