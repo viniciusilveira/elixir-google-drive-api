@@ -22,14 +22,14 @@ defmodule ElixirGoogleDriveApi.DriveTest do
     test "with success" do
       with_mock HTTPoison, [request: fn(:post, @copy_url, "", @headers) -> @response_body end] do
         response = Drive.copy_file(@file_id, @headers)
-        assert response == @body |> Poison.decode!
+        assert response == {:ok, @body |> Poison.decode!}
       end
     end
 
     test "with error" do
       with_mock HTTPoison, [request: fn(:post, @copy_url, "", @headers) -> @error_response_body end] do
         response = Drive.copy_file(@file_id, @headers)
-        assert response == @error_body
+        assert response == {:error, @error_body}
       end
     end
   end
@@ -47,14 +47,14 @@ defmodule ElixirGoogleDriveApi.DriveTest do
     test "with success" do
       with_mock HTTPoison, [request: fn(:patch, @update_url, @request_body, @headers) -> @response_body end] do
         response = Drive.rename_file(@file_id,  %{title: "Renamed"}, @headers)
-        assert response == @body |> Poison.decode!
+        assert response == {:ok, @body |> Poison.decode!}
       end
     end
 
     test "with error" do
       with_mock HTTPoison, [request: fn(:patch, @update_url, @request_body, @headers) -> @error_response_body end] do
         response = Drive.rename_file(@file_id,  %{title: "Renamed"}, @headers)
-        assert response == @error_body
+        assert response == {:error, @error_body}
       end
     end
   end
@@ -84,7 +84,7 @@ defmodule ElixirGoogleDriveApi.DriveTest do
     test "with error" do
       with_mock HTTPoison, [get: fn(@invalid_export_url, @headers) -> @error_response_body end] do
         response = Drive.export_file(@file_id, @headers, "application/invalid.mime.type")
-        assert response == @error_body
+        assert response == {:error, @error_body}
       end
     end
   end
@@ -102,14 +102,14 @@ defmodule ElixirGoogleDriveApi.DriveTest do
     test "with success" do
       with_mock HTTPoison, [request: fn(:put, @update_permission_url, "", @headers) -> @response_body end] do
         response = Drive.update_permission_file(@file_id, @headers, @permission_id)
-        assert response == @body |> Poison.decode!
+        assert response == {:ok, @body |> Poison.decode!}
       end
     end
 
     test "with error" do
       with_mock HTTPoison, [request: fn(:put, @invalid_update_permission_url, "", @headers) -> @error_response_body end] do
         response = Drive.update_permission_file(@file_id, @headers, @invalid_permission_id)
-        assert response == @error_body
+        assert response == {:error, @error_body}
       end
     end
   end
@@ -131,14 +131,14 @@ defmodule ElixirGoogleDriveApi.DriveTest do
     test "with success" do
       with_mock HTTPoison, [request: fn(:post, @insert_permission_url, @request_body, @headers) -> @response_body end] do
         response = Drive.share_file_with_link(@file_id, @headers)
-        assert response == @body |> Poison.decode!
+        assert response == {:ok, @body |> Poison.decode!}
       end
     end
 
     test "with error" do
       with_mock HTTPoison, [request: fn(:post, @invalid_insert_permission_url, @request_body, @headers) -> @error_response_body end] do
         response = Drive.share_file_with_link(@invalid_file_id, @headers)
-        assert response == @error_body
+        assert response == {:error, @error_body}
       end
     end
   end
