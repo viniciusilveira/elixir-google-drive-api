@@ -40,7 +40,7 @@ defmodule ElixirGoogleDriveApi.Drive do
           File.write!(download_dest, response_body)
           {:ok, download_dest}
         end
-      {:error, %HTTPoison.Error{reason: reason}} -> reason
+      {:error, %HTTPoison.Error{reason: reason}} -> {:error, reason}
     end
   end
 
@@ -61,14 +61,16 @@ defmodule ElixirGoogleDriveApi.Drive do
       |> Poison.encode!
 
     insert_permission_file(file_id, headers, body)
+
   end
 
   defp request(method, url, headers, body \\ "") do
     case HTTPoison.request(method, url, body, headers) do
       {:ok, %HTTPoison.Response{body: response_body}} ->
-        response_body
+        response = response_body
         |> Poison.decode!
-      {:error, %HTTPoison.Error{reason: reason}} -> reason
+        {:ok, response}
+      {:error, %HTTPoison.Error{reason: reason}} -> {:error, reason}
     end
   end
 end
