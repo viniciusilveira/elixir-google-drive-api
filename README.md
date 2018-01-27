@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.org/viniciusilveira/elixir-google-drive-api.svg?branch=master)](https://travis-ci.org/viniciusilveira/elixir-google-drive-api)
-[![Maintainability](https://api.codeclimate.com/v1/badges/2da9c20c9e4bace4a087/maintainability)](https://codeclimate.com/github/viniciusilveira/elixir-google-drive-api/maintainability)
+[![Ebert](https://ebertapp.io/github/viniciusilveira/elixir-google-drive-api.svg)](https://ebertapp.io/github/viniciusilveira/elixir-google-drive-api)
 [![codecov](https://codecov.io/gh/viniciusilveira/elixir-google-drive-api/branch/master/graph/badge.svg)](https://codecov.io/gh/viniciusilveira/elixir-google-drive-api)
 
 # ElixirGoogleDriveApi
