@@ -1,0 +1,19 @@
+engines:
+  credo:
+    enabled: true
+  fixme:
+    enabled: true
+  eslint:
+    enabled: true
+    exclude_paths:
+      - assets/*config.js
+  scss-lint:
+    enabled: true
+  remark-lint:
+    enabled: true
+exclude_paths:
+- config
+- priv
+- assets/vendor
+- test
+- spec
