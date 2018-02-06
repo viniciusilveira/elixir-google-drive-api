@@ -4,7 +4,7 @@ defmodule ElixirGoogleDriveApi.Mixfile do
   def project do
     [
       app: :elixir_google_drive_api,
-      version: "0.4.0",
+      version: "0.4.1",
       elixir: "~> 1.5",
       start_permanent: Mix.env == :prod,
       package: package(),
