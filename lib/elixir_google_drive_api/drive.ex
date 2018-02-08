@@ -34,7 +34,7 @@ defmodule ElixirGoogleDriveApi.Drive do
     case HTTPoison.get export_url(file_id, mime_type), headers do
       {:ok, %HTTPoison.Response{body: "Not Found"}} -> {:error, :not_found}
       {:ok, %HTTPoison.Response{body: response_body}} ->
-        if String.valid?(response_body) do
+        if is_binary(response_body) do
           File.write!(download_dest, response_body)
           {:ok, download_dest}
         else
