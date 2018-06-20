@@ -8,6 +8,94 @@
 
 Elixir library to work files of Google Drive
 
+## Current Status
+
+[Google Drive V3 Api Reference](https://developers.google.com/drive/api/v3/reference/)
+
+### About
+
+For About Resource details, see the [resource representation](https://developers.google.com/drive/api/v3/reference/about#resource) page.
+
+- [ ] [Get](https://developers.google.com/drive/api/v3/reference/about/get)
+
+### Changes
+
+For Changes Resource details, see the [resource representation](https://developers.google.com/drive/api/v3/reference/changes#resource) page.
+
+- [ ] [Get Start Page Token](https://developers.google.com/drive/api/v3/reference/changes/getStartPageToken)
+- [ ] [List](https://developers.google.com/drive/api/v3/reference/changes/list)
+- [ ] [Watch](https://developers.google.com/drive/api/v3/reference/changes/watch)
+
+### Channels
+
+For Channels Resource details, see the [resource representation](https://developers.google.com/drive/api/v3/reference/channels#resource) page.
+
+- [ ] [Stop](https://developers.google.com/drive/api/v3/reference/channels/stop)
+
+### Comments
+
+For Comments Resource details, see the [resource representation](https://developers.google.com/drive/api/v3/reference/comments#resource) page.
+
+- [ ] [Create](https://developers.google.com/drive/api/v3/reference/comments/create)
+- [ ] [Delete](https://developers.google.com/drive/api/v3/reference/comments/delete)
+- [ ] [Get](https://developers.google.com/drive/api/v3/reference/comments/get)
+- [ ] [List](https://developers.google.com/drive/api/v3/reference/comments/list)
+- [ ] [Update](https://developers.google.com/drive/api/v3/reference/comments/update)
+
+### Files
+
+For Files Resource details, see the [resource representation](https://developers.google.com/drive/api/v3/reference/files#resource) page.
+
+- [x] [Copy](https://developers.google.com/drive/api/v3/reference/files/copy)
+- [ ] [Create](https://developers.google.com/drive/api/v3/reference/files/create)
+- [ ] [Delete](https://developers.google.com/drive/api/v3/reference/files/delete)
+- [ ] [Empty Trash](https://developers.google.com/drive/api/v3/reference/files/emptyTrash)
+- [ ] [Export](https://developers.google.com/drive/api/v3/reference/files/export)
+- [ ] [Generate Ids](https://developers.google.com/drive/api/v3/reference/files/generateIds)
+- [ ] [Get](https://developers.google.com/drive/api/v3/reference/files/get)
+- [x] [Update](https://developers.google.com/drive/api/v3/reference/files/update)
+- [ ] [List](https://developers.google.com/drive/api/v3/reference/files/list)
+- [ ] [Watch](https://developers.google.com/drive/api/v3/reference/files/watch)
+
+### Permissions
+
+For Permissions Resource details, see the [resource representation](https://developers.google.com/drive/api/v3/reference/permissions#resource) page.
+
+- [x] [Create](https://developers.google.com/drive/api/v3/reference/permissions/create)
+- [ ] [Delete](https://developers.google.com/drive/api/v3/reference/permissions/delete)
+- [ ] [Get](https://developers.google.com/drive/api/v3/reference/permissions/get)
+- [ ] [List](https://developers.google.com/drive/api/v3/reference/permissions/list)
+- [x] [Update](https://developers.google.com/drive/api/v3/reference/permissions/update)
+
+### Replies
+
+For Replies Resource details, see the [resource representation](https://developers.google.com/drive/api/v3/reference/replies#resource) page.
+
+- [ ] [Create](https://developers.google.com/drive/api/v3/reference/replies/create)
+- [ ] [Delete](https://developers.google.com/drive/api/v3/reference/replies/delete)
+- [ ] [Get](https://developers.google.com/drive/api/v3/reference/replies/get)
+- [ ] [List](https://developers.google.com/drive/api/v3/reference/replies/list)
+- [ ] [Update](https://developers.google.com/drive/api/v3/reference/replies/update)
+
+### Revisions
+
+For Revisions Resource details, see the [resource representation](https://developers.google.com/drive/api/v3/reference/revisions#resource) page.
+
+- [ ] [Delete](https://developers.google.com/drive/api/v3/reference/revisions/delete)
+- [ ] [Get](https://developers.google.com/drive/api/v3/reference/revisions/get)
+- [ ] [List](https://developers.google.com/drive/api/v3/reference/revisions/list)
+- [ ] [Update](https://developers.google.com/drive/api/v3/reference/revisions/update)
+
+### Teamdrives
+
+For Revisions Resource details, see the [resource representation](https://developers.google.com/drive/api/v3/reference/teamdrives#resource) page.
+
+- [ ] [Create](https://developers.google.com/drive/api/v3/reference/teamdrives/create)
+- [ ] [Delete](https://developers.google.com/drive/api/v3/reference/teamdrives/delete)
+- [ ] [Get](https://developers.google.com/drive/api/v3/reference/teamdrives/get)
+- [ ] [List](https://developers.google.com/drive/api/v3/reference/teamdrives/list)
+- [ ] [Update](https://developers.google.com/drive/api/v3/reference/teamdrives/update)
+
 ## Setup
 
 1. Use [this](https://console.developers.google.com/start/api?id=sheets.googleapis.com) wizard to create or select a project in the Google Developers Console and automatically turn on the API. Click __Continue__, then __Go to credentials__.
