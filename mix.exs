@@ -12,7 +12,7 @@ defmodule ElixirGoogleDriveApi.Mixfile do
       deps: deps(),
       source_url: "https://github.com/viniciusilveira/elixir-google-drive-api",
       preferred_cli_env: [
-        "coveralls": :test,
+        coveralls: :test,
         "coveralls.html": :test,
         "coveralls.json": :test,
       ],
