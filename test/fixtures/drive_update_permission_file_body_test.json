@@ -1,0 +1,1 @@
+"{\n \"kind\": \"drive#permission\",\n \"etag\": \"\\\"rOX0fJzgyZU36BYOEcGKIYxPCtI/WYANCZ0UohBR0ORDBV2s-qumiio\\\"\",\n \"id\": \"anyoneWithLink\",\n \"selfLink\": \"https://www.googleapis.com/drive/v3/files/12BbXrA627UzddYJWK3qww1yvWl_aKuvEeSv-qkPtz68/permissions/anyoneWithLink\",\n \"role\": \"writer\",\n \"type\": \"anyone\",\n \"withLink\": true\n}\n"
