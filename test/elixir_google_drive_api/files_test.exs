@@ -1,8 +1,8 @@
-defmodule ElixirGoogleDriveApi.DriveTest do
-  use ExUnit.Case, async: true
+defmodule ElixirGoogleDriveApi.FilesTest do
+  use ExUnit.Case, async: false
   use Plug.Test
 
-  alias ElixirGoogleDriveApi.Drive
+  alias ElixirGoogleDriveApi.Files
 
   import Mock
 
@@ -21,14 +21,14 @@ defmodule ElixirGoogleDriveApi.DriveTest do
 
     test "with success" do
       with_mock HTTPoison, [request: fn(:post, @copy_url, "", @headers) -> @response_body end] do
-        response = Drive.copy_file(@file_id, @headers)
+        response = Files.copy_file(@file_id, @headers)
         assert response == {:ok, @body |> Poison.decode!}
       end
     end
 
     test "with error" do
       with_mock HTTPoison, [request: fn(:post, @copy_url, "", @headers) -> @error_response_body end] do
-        response = Drive.copy_file(@file_id, @headers)
+        response = Files.copy_file(@file_id, @headers)
         assert response == {:error, @error_body}
       end
     end
@@ -46,14 +46,14 @@ defmodule ElixirGoogleDriveApi.DriveTest do
 
     test "with success" do
       with_mock HTTPoison, [request: fn(:patch, @update_url, @request_body, @headers) -> @response_body end] do
-        response = Drive.rename_file(@file_id,  %{title: "Renamed"}, @headers)
+        response = Files.rename_file(@file_id,  %{title: "Renamed"}, @headers)
         assert response == {:ok, @body |> Poison.decode!}
       end
     end
 
     test "with error" do
       with_mock HTTPoison, [request: fn(:patch, @update_url, @request_body, @headers) -> @error_response_body end] do
-        response = Drive.rename_file(@file_id,  %{title: "Renamed"}, @headers)
+        response = Files.rename_file(@file_id,  %{title: "Renamed"}, @headers)
         assert response == {:error, @error_body}
       end
     end
@@ -76,68 +76,14 @@ defmodule ElixirGoogleDriveApi.DriveTest do
 
     test "with success" do
       with_mock HTTPoison, [get: fn(@export_url, @headers) -> @response_body end] do
-        response = Drive.export_file(@file_id, @headers, "application/vnd.oasis.opendocument.text")
+        response = Files.export_file(@file_id, @headers, "application/vnd.oasis.opendocument.text")
         assert response == {:ok, ".temp/doc_file.doc"}
       end
     end
 
     test "with error" do
       with_mock HTTPoison, [get: fn(@invalid_export_url, @headers) -> @error_response_body end] do
-        response = Drive.export_file(@file_id, @headers, "application/invalid.mime.type")
-        assert response == {:error, @error_body}
-      end
-    end
-  end
-
-  describe "update_permission_file" do
-    @permission_id "anyoneWithLink"
-    @invalid_permission_id "anyone"
-    @update_permission_url "https://www.googleapis.com/drive/v3/files/#{@file_id}/permissions/#{@permission_id}"
-    @invalid_update_permission_url "https://www.googleapis.com/drive/v3/files/#{@file_id}/permissions/#{@invalid_permission_id}"
-    @body "./test/fixtures/drive_update_permission_file_body_test.json" |> File.read!
-    @response_body {:ok, %HTTPoison.Response{body: @body}}
-    @error_body "./test/fixtures/drive_update_permission_file_error_body_test.json" |> File.read!
-    @error_response_body {:error, %HTTPoison.Error{reason: @error_body}}
-
-    test "with success" do
-      with_mock HTTPoison, [request: fn(:put, @update_permission_url, "", @headers) -> @response_body end] do
-        response = Drive.update_permission_file(@file_id, @headers, @permission_id)
-        assert response == {:ok, @body |> Poison.decode!}
-      end
-    end
-
-    test "with error" do
-      with_mock HTTPoison, [request: fn(:put, @invalid_update_permission_url, "", @headers) -> @error_response_body end] do
-        response = Drive.update_permission_file(@file_id, @headers, @invalid_permission_id)
-        assert response == {:error, @error_body}
-      end
-    end
-  end
-
-  describe "share_file_with_link" do
-    @invalid_file_id 'invalid'
-    @insert_permission_url "https://www.googleapis.com/drive/v3/files/#{@file_id}/permissions"
-    @invalid_insert_permission_url "https://www.googleapis.com/drive/v3/files/#{@invalid_file_id}/permissions"
-    @request_body %{
-        role: "writer",
-        type: "anyone"
-      }
-      |> Poison.encode!
-    @body "./test/fixtures/drive_share_file_with_link_body_test.json" |> File.read!
-    @response_body {:ok, %HTTPoison.Response{body: @body}}
-    @error_body "./test/fixtures/drive_share_file_with_link_error_body_test.json" |> File.read!
-    @error_response_body {:error, %HTTPoison.Error{reason: @error_body}}
-
-    test "with success" do
-      with_mock HTTPoison, [request: fn(:post, @insert_permission_url, @request_body, @headers) -> @response_body end] do
-        response = Drive.share_file_with_link(@file_id, @headers)
-        assert response == {:ok, @body |> Poison.decode!}
-      end
-    end
-
-    test "with error" do
-      with_mock HTTPoison, [request: fn(:post, @invalid_insert_permission_url, @request_body, @headers) -> @error_response_body end] do
-        response = Drive.share_file_with_link(@invalid_file_id, @headers)
+        response = Files.export_file(@file_id, @headers, "application/invalid.mime.type")
         assert response == {:error, @error_body}
       end
     end
