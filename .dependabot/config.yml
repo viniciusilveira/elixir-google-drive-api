@@ -1,0 +1,20 @@
+version: 1
+update_configs:
+  - package_manager: "elixir:hex"
+    directory: "/"
+    update_schedule: "weekly"
+  - package_manager: "docker"
+    directory: "/"
+    update_schedule: "weekly"
+    default_reviewers:
+      - "viniciusilveira"
+    default_assignees:
+      - "viniciusilveira"
+    default_labels:
+      - "dependencies"
+      - "dependabot"
+    allowed_updates:
+      - match:
+          # Only includes indirect (aka transient/sub-dependencies) for
+          # supported package managers: ruby:bundler, python, php:composer, rust:cargo
+          update_type: "all"
